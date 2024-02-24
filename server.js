@@ -1,13 +1,14 @@
 import express from 'express'
-import data from './data.js'
 
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import seedRoutes from './routes/seedRoutes.js'
+import productRouter from './routes/ProductRoutes.js'
+import userRouter from './routes/userRoutes.js'
+
 const app = express()
 dotenv.config()
-import cors from 'cors'
 
-app.use(cors())
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
@@ -17,26 +18,22 @@ mongoose
     console.log(err.message)
   })
 
-app.get('/api/posts', (req, res) => {
-  res.send(data.products)
-})
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.get('/api/posts/category/:category', (req, res) => {
-  const product = data.products.find((x) => x.category === req.params.category)
-  if (product) {
-    res.send(product)
-  } else {
-    res.status(404).send({ message: 'Product not found' })
-  }
-})
+app.use('/api/seed', seedRoutes)
 
-app.get('/api/posts/:id', (req, res) => {
-  const product = data.products.find((x) => x.id === req.params.id)
-  if (product) {
-    res.send(product)
-  } else {
-    res.status(404).send({ message: 'Product not found' })
-  }
+app.use('/api/posts', productRouter)
+app.use('/api/users', userRouter)
+
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message })
+})
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  next()
 })
 
 const port = process.env.PORT || 4000
