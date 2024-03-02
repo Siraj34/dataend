@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { trusted } from 'mongoose'
 
 //const reviewSchema = new mongoose.Schema(
 //  {
