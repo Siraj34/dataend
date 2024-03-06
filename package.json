@@ -1,25 +1,31 @@
 {
-  "name": "backend",
+  "name": "dataend",
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "dev": "func start ",
     "start": " nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests yet...\""
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
+    "@azure/functions": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.2",
-    "express": "^4.18.2",
+    "express": "^4.18.3",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.1.1"
+    "mongoose": "^8.1.1",
+    "nodemon": "^3.1.0"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.3"
-  }
+  "main": "src/functions/*.js",
+  "nodemon": "^3.0.3",
+  "bcryptjs": "^2.4.3",
+  "cors": "^2.8.5",
+  "dotenv": "^16.4.2",
+  "express": "^4.18.2",
+  "express-async-handler": "^1.2.0",
+  "jsonwebtoken": "^9.0.2",
+  "mongoose": "^8.1.1"
 }
