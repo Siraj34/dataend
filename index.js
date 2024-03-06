@@ -10,14 +10,15 @@ import cors from 'cors'
 
 const app = express()
 dotenv.config()
-
-const corsConfig = {
-  origin: '',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+app.use(cors())
+app.options('*', cors())
+var allowCrossDomain = function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  next()
 }
-app.use(cors(corsConfig))
-app.options('', cors(corsConfig))
+app.use(allowCrossDomain)
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
